@@ -2,6 +2,7 @@
 import { use, useState } from "react";
 import Link from "next/link";
 import { useNotes } from "./notes/notes-context";
+
 export default function Home() {
   const [newNote, setNewNote] = useState({
     title: "",
@@ -14,8 +15,7 @@ export default function Home() {
       [name]: value,
     }));
   };
-  const { notes, addNote } = useNotes();
-
+const { notes, addNote } = useNotes();
   return (
     <>
       <div>
@@ -45,7 +45,8 @@ export default function Home() {
         <button
           onClick={(e) => {
             e.preventDefault();
-            addNote(newNote, setNewNote);
+            addNote(newNote);
+            setNewNote({ title: "", content: "" });
           }}
           className="border w-100"
         >

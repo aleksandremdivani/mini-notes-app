@@ -1,8 +1,12 @@
 "use client";
 
 import { createContext, useContext, useState } from "react";
-
-const initialNotes = [
+type Note = {
+  id: string;
+  title: string;
+  content: string;
+};
+const initialNotes: Array<Note> = [
   {
     id: "1",
     title: "First note",
@@ -16,12 +20,15 @@ const initialNotes = [
   },
 ];
 
-const NotesContext = createContext();
-
-export function NotesProvider({ children }) {
+type NotesContextType = {
+  notes: Array<Note>;
+  addNote: (note: Note) => void;
+};
+const NotesContext = createContext<NotesContextType | undefined>(undefined);
+export function NotesProvider({ children }: { children: React.ReactNode }) {
   const [notes, setNotes] = useState(initialNotes);
 
-  const addNote = (note, setNote) => {
+  const addNote = (note: Omit<Note, "id">) => {
     setNotes((prev) => {
       return [
         ...prev,
@@ -31,7 +38,7 @@ export function NotesProvider({ children }) {
         },
       ];
     });
-    setNote({ title: "", content: "" });
+    
   };
 
   return (
