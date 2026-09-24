@@ -22,7 +22,7 @@ const initialNotes: Array<Note> = [
 
 type NotesContextType = {
   notes: Array<Note>;
-  addNote: (note: Note) => void;
+  addNote: (note: Omit<Note, "id">) => void;
 };
 const NotesContext = createContext<NotesContextType | undefined>(undefined);
 export function NotesProvider({ children }: { children: React.ReactNode }) {
@@ -38,7 +38,6 @@ export function NotesProvider({ children }: { children: React.ReactNode }) {
         },
       ];
     });
-    
   };
 
   return (
@@ -49,5 +48,9 @@ export function NotesProvider({ children }: { children: React.ReactNode }) {
 }
 
 export function useNotes() {
-  return useContext(NotesContext);
+  const context = useContext(NotesContext);
+  if (!context) {
+    throw new Error("useNotes must be used within a NotesProvider");
+  }
+  return context;
 }

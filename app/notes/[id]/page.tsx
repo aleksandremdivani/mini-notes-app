@@ -3,7 +3,11 @@ import { use } from "react";
 import { notFound } from "next/navigation";
 import { useNotes } from "../notes-context";
 
-export default function NotePage({ params }) {
+export default function NotePage({
+   params,
+   }: {
+    params: Promise<{id: string}>
+   }) {
   const { id } = use(params);
   const { notes } = useNotes();
   const currentNote = notes.find((i) => id === i.id);

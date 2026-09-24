@@ -2,13 +2,14 @@
 import { use, useState } from "react";
 import Link from "next/link";
 import { useNotes } from "./notes/notes-context";
+type FormElement = HTMLInputElement | HTMLTextAreaElement;
 
 export default function Home() {
   const [newNote, setNewNote] = useState({
     title: "",
     content: "",
   });
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<FormElement>) => {
     const { name, value } = e.target;
     setNewNote((prev) => ({
       ...prev,
